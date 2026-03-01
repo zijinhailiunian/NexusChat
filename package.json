@@ -1,0 +1,26 @@
+{
+  "name": "nexuschat",
+  "version": "0.4.0",
+  "private": true,
+  "description": "NexusChat - IDE for Thinking",
+  "main": "src/index.js",
+  "scripts": {
+    "dev": "node src/index.js",
+    "test": "npm run test:unit && npm run test:integration",
+    "test:unit": "node --test tests/unit/**/*.test.js",
+    "test:integration": "node --test tests/integration/**/*.test.js",
+    "test:smoke": "bash scripts/smoke.sh",
+    "test:all": "npm run test && npm run test:smoke",
+    "lint": "node scripts/lint.js",
+    "format": "node scripts/format.js",
+    "format:check": "node scripts/format.js --check",
+    "check": "npm run format:check && npm run lint && npm run test:all",
+    "ops:health": "bash scripts/health-check.sh",
+    "ops:alert": "bash scripts/alert-check.sh /tmp/nexuschat-health-check.log",
+    "ops:rollback:verify": "bash scripts/rollback-verify.sh"
+  },
+  "engines": {
+    "node": "20.11.1"
+  },
+  "packageManager": "npm@10.2.4"
+}
