@@ -1,6 +1,30 @@
 # NexusChat
 
-NexusChat 是一个面向 Agent/知识图谱场景的协作平台。当前仓库已完成 **MVP 工程初始化**，采用前后端分层与可演进的存储设计。
+NexusChat 是一个 **AI 思考与创作 IDE（IDE for Thinking）**：不是“带侧边栏的聊天软件”，而是一个能无限发散、最终又能完美收敛的「可编辑知识工作台」。
+
+当前仓库已实现**前端 MVP**（无需后端即可使用，BYO API Key），核心能力：
+
+- **主线 Chat**：流式回答，主线本身就是一篇可编辑草稿。
+- **语义化划词菜单**：划选文字时按内容类型（代码 / 术语 / 句子）给出不同动作。
+- **递归释疑抽屉**：划词在右侧滑出抽屉深钻，可层层嵌套并带面包屑导航。
+- **富文本可编辑气泡**：双击任意气泡用 Tiptap 进入富文本编辑。
+- **向上融合**：把抽屉里的分支灵感以「扩展 / 替换 / 子段插入」三种策略合并回主线。
+- **生成依据溯源（Prompt Trace）**：查看某段内容的融合来源与编辑历史。
+- **全局图谱视野**：一键把主线 + 抽屉分支转成知识结构图（React Flow）。
+
+## 快速开始（前端）
+
+```bash
+cd apps/web
+npm install
+npm run dev   # http://localhost:5173
+```
+
+打开后点击右上角 **⚙️ 设置** 填入模型 API Key：
+- **Anthropic（推荐）**：默认模型 `claude-3-5-sonnet-latest`。
+- **OpenAI 兼容**：可填 OpenAI / DeepSeek 等的 Base URL 与模型名（如 DeepSeek `https://api.deepseek.com/v1` + `deepseek-chat`）。
+
+Key 仅保存在浏览器 localStorage，请求由前端直连模型服务，不经过任何中间服务器。
 
 ## 技术栈决策
 
@@ -33,7 +57,9 @@ NexusChat 是一个面向 Agent/知识图谱场景的协作平台。当前仓库
     └── architecture.md
 ```
 
-## 快速开始
+## 完整开发环境（含后端，预留）
+
+> 后端目前仅有健康检查等占位接口，下面是面向后续后端化的完整启动方式。
 
 ### 1) 启动基础设施（PostgreSQL + pgvector）
 
@@ -65,6 +91,7 @@ npm run dev
 - API Docs: http://localhost:8000/docs
 
 ## 下一步建议
-- 增加 Alembic 迁移与用户/会话/节点/边等核心表。
-- 接入 pgvector 检索 Pipeline。
-- 在前端 Graph View 中加入节点执行状态与边数据流可视化。
+- 后端化：把对话/分支 DAG 持久化到 PostgreSQL，并提供 `/api/v1/chat` 流式代理（避免前端暴露 Key）。
+- 接入 pgvector 检索 Pipeline 与全局知识记忆。
+- 富文本编辑增强：表格、图片、Slash 命令。
+- 专注模式（Focus Mode）与键盘快捷键。
